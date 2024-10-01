@@ -44,7 +44,31 @@ const drinks: Drink[] = [
   },
 ];
 
+
+
 const router = Router();
+
+router.get("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const drink = drinks.find((drink) => drink.id === id);
+  if (!drink) {
+    return res.sendStatus(404);
+  }
+  return res.json(drink);
+});
+
+router.get("/", (req, res) => {
+  if (!req.query["budget-max"]) {
+    // Cannot call req.query.budget-max as "-" is an operator
+    return res.json(drinks);
+  }
+  const budgetMax = Number(req.query["budget-max"]);
+  const filteredDrinks = drinks.filter((drink) => {
+    return drink.price <= budgetMax;
+  });
+  return res.json(filteredDrinks);
+});
+
 
 router.get("/", (_req, res) => {
   return res.json(drinks);
