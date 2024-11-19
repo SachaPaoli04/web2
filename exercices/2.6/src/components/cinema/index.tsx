@@ -1,5 +1,7 @@
 import { Movie } from "../../type";
 import MovieItem from "../MovieItem"; 
+import '../../styles.css';
+
  
 interface CinemaProps {
   name: string;
